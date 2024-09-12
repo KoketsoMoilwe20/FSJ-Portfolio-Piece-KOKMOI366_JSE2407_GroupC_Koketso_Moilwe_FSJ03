@@ -2,7 +2,7 @@ import Link from 'next/link';
 import ProductList from '../components/ProductList';
 import styles from "../styles/products.module.css";
 
-async function getProducts() {
+async function getProducts(page = 1) {
     const res = await fetch('https://next-ecommerce-api.vercel.app/products?limit=20', { cache: 'no-store' });
     if (!res.ok) {
       throw new Error('Failed to fetch products');
