@@ -15,3 +15,7 @@ export default function ProductList({ initialProducts }) {
       setLoading(false);
     }
   }, [initialProducts]);
+
+  if (loading) {
+    return <div className={styles.loading}>Loading products...</div>;
+  }
