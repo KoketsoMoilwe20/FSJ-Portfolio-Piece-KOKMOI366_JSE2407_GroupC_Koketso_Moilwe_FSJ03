@@ -13,8 +13,9 @@ async function getProducts(page = 1) {
   }
   
 
-export default async function ProductsPage() {
-  const data = await getProducts();
+export default async function ProductsPage({searchParams}) {
+    const currentPage = searchParams.page ? parseInt(searchParams.page, 10) : 1;
+  const data = await getProducts(currentPage);
 
   return (
     <div className={styles.container}>
