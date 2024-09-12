@@ -42,3 +42,17 @@ export default function ProductList({ initialProducts }) {
           </div>
         ))}
       </div>
+      <div className={styles.pagination}>
+        {Array.from({ length: Math.ceil(products.length / productsPerPage) }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => paginate(i + 1)}
+            className={`${styles.pageButton} ${currentPage === i + 1 ? styles.active : ''}`}
+          >
+            {i + 1}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
