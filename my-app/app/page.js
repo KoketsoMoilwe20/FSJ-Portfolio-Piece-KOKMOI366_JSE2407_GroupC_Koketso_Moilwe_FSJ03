@@ -10,3 +10,19 @@ export default function Home() {
           <h2>View Products &rarr;</h2>
           <p>Explore our range of products and find what you need!</p>
         </Link>
+        <Link href="/about" className={styles.card}>
+          <h2>About Us &rarr;</h2>
+          <p>Learn more about our store and our mission.</p>
+        </Link>
+        <Link href="/contact" className={styles.card}>
+          <h2>Contact Us &rarr;</h2>
+          <p>Have questions? Get in touch with our support team.</p>
+        </Link>
+        <Link href="/cart" className={styles.card}>
+          <h2>Your Cart &rarr;</h2>
+          <p>View the items you've added to your cart and proceed to checkout.</p>
+        </Link>
+      </div>
+    </main>
+  );
+}
