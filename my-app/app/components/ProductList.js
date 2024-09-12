@@ -8,3 +8,10 @@ export default function ProductList({ initialProducts }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const productsPerPage = 10;
+
+  useEffect(() => {
+    if (initialProducts && initialProducts.length > 0) {
+      setProducts(initialProducts);
+      setLoading(false);
+    }
+  }, [initialProducts]);
