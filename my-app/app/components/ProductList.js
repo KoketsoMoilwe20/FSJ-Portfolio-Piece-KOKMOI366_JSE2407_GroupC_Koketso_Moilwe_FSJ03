@@ -19,3 +19,9 @@ export default function ProductList({ initialProducts }) {
   if (loading) {
     return <div className={styles.loading}>Loading products...</div>;
   }
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
