@@ -1,0 +1,65 @@
+/* Header.module.css */
+
+.header {
+    background-color: #1a202c; /* Dark gray background */
+    padding: 1rem; /* Padding around the header */
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    color: #ffffff; /* White text color */
+    text-decoration: none;
+  }
+  
+  .logoImage {
+    height: 2.5rem; /* Adjust as needed */
+    margin-right: 0.5rem;
+  }
+  
+  .logoText {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .menuButton {
+    font-size: 2rem;
+    color: #ffffff;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .nav {
+    display: flex;
+    flex-direction: column;
+    background-color: #2d3748; /* Slightly lighter dark gray */
+    padding: 1rem;
+    border-radius: 0.25rem;
+  }
+  
+  .navHidden {
+    display: none;
+  }
+  
+  .navVisible {
+    display: flex;
+  }
+  
+  .navLink {
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+  }
+  
