@@ -1,14 +1,15 @@
-import './styles/globals.css'
+
+// app/layout.js
+import Header from './components/Header';
+import './styles/globals.css'; // Ensure global styles are applied
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <Header />
         {children}
-        <footer className="mt-8 text-center">
-          <p></p>
-        </footer>
       </body>
     </html>
-  )
+  );
 }
