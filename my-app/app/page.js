@@ -1,31 +1,49 @@
-import Link from "next/link";
-import styles from "./page.module.css"
+// This is a Server Component because we don't have "use client" here.
+import ProductCard from "./components/ProductCard";
+import Pagination from "./components/Pagination";
+import styles from './styles/page.module.css'; // Import the CSS module
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <h1 className={styles.title}>Welcome to Our E-commerce Store</h1>
-      <p className={styles.description}>
-        Browse our collection of amazing products and find the best deals!
-      </p>
-      <div className={styles.grid}>
-        <Link href="/products" className={styles.card}>
-          <h2>View Products &rarr;</h2>
-          <p>Explore our range of products and find what you need!</p>
-        </Link>
-        <Link href="/about" className={styles.card}>
-          <h2>About Us &rarr;</h2>
-          <p>Learn more about our store and our mission.</p>
-        </Link>
-        <Link href="/contact" className={styles.card}>
-          <h2>Contact Us &rarr;</h2>
-          <p>Have questions? Get in touch with our support team.</p>
-        </Link>
-        <Link href="/cart" className={styles.card}>
-          <h2>Your Cart &rarr;</h2>
-          <p>View the items you've added to your cart and proceed to checkout.</p>
-        </Link>
+// Fetch products from the API, handle errors if they occur
+async function fetchProducts(page = 1) {
+  const res = await fetch(`https://next-ecommerce-api.vercel.app/products?skip=${(page - 1) * 20}&limit=20`, {
+    cache: 'no-store', // Ensure data is always fresh
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch products');
+  }
+  return res.json();
+}
+
+// Main products page component (Server Component)
+export default async function ProductsPage({ searchParams }) {
+  const page = parseInt(searchParams.page) || 1; // Get the current page from URL query (searchParams)
+  let products;
+
+  try {
+    products = await fetchProducts(page); // Fetch products for the current page
+  } catch (error) {
+    return (
+      <div>
+        <h1>Failed to load products</h1>
+        <p>{error.message}</p>
       </div>
-    </main>
+    );
+  }
+
+  return (
+    <div>
+      <h1>Products</h1>
+
+      {/* Render product grid */}
+      <div className={styles.productGrid}>
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+
+      {/* Pagination Component */}
+      <Pagination currentPage={page} totalItems={100} itemsPerPage={20} />
+    </div>
   );
 }
