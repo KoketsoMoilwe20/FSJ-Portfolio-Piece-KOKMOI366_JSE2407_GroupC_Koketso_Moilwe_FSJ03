@@ -1,4 +1,4 @@
-import styles from '../../styles/productDetails.module.css';
+import styles from '../products/[id]/productDetails.module.css';
 
 async function getProductDetails(id) {
   const res = await fetch(`https://next-ecommerce-api.vercel.app/products/${id}`, { cache: 'no-store' });
