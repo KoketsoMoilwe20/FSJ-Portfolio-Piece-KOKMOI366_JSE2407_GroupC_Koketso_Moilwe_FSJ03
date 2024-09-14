@@ -13,8 +13,15 @@ import styles from '../styles/pagination.module.css';
  */
 
 export default function Pagination({ currentPage }) {
-  const router = useRouter();
+  const router = useRouter(); //Access the Next.js router for navigation.
 
+
+  /**
+   * Navigate to the specified page.
+   * 
+   * @param {number} page - The page number to navigate to.
+   */
+  
   // Function to handle page navigation
   const goToPage = (page) => {
     router.push(`/?page=${page}`);
