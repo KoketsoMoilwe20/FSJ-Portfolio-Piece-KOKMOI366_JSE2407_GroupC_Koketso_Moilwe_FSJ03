@@ -21,14 +21,16 @@ export default function Pagination({ currentPage }) {
    * 
    * @param {number} page - The page number to navigate to.
    */
-  
+
   // Function to handle page navigation
   const goToPage = (page) => {
+    // Update the URL to reflect the new page.
     router.push(`/?page=${page}`);
   };
 
   return (
     <div className={styles.pagination}>
+      {/* Previous button: Disbaled when on the first page */}
       <button 
         className={styles.button}
         disabled={currentPage === 1} 
@@ -37,8 +39,10 @@ export default function Pagination({ currentPage }) {
         Previous
       </button>
 
+    {/* Display the current page number */}
       <span className={styles.pageNumber}>Page {currentPage}</span>
 
+    {/* Next button */}
       <button 
         className={styles.button}
         onClick={() => goToPage(currentPage + 1)}
