@@ -1,7 +1,7 @@
-// This is a Server Component because we don't have "use client" here.
+// This is a Server Component as we don't have "use client" here
 import ProductCard from "./components/ProductCard";
 import Pagination from "./components/Pagination";
-import styles from './styles/page.module.css'; // Import the CSS module
+import styles from './styles/page.module.css'; 
 
 // Fetch products from the API, handle errors if they occur
 async function fetchProducts(page = 1) {

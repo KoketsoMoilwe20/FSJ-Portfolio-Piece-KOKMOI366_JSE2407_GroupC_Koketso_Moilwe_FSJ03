@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from './productDetails.module.css'; // Import the CSS module
+import styles from './productDetails.module.css'; 
 
 export default function ProductDetail({ params }) {
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState('');
   const router = useRouter();
-  const { id } = params; // Destructure the id from the params
+  const { id } = params; // Destructuring the id from the params
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -17,7 +17,7 @@ export default function ProductDetail({ params }) {
         if (res.ok) {
           const data = await res.json();
           setProduct(data);
-          setMainImage(data.images[0]); // Set the first image as the main image
+          setMainImage(data.images[0]); // Setting the first image as the main image
         } else {
           console.error('Failed to fetch product');
         }
