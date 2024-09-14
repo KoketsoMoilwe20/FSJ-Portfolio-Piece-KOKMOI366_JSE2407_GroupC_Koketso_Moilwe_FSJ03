@@ -1,7 +1,16 @@
 "use client"; // This is a Client Component because it uses state or client-side behavior
 
 import { useRouter } from 'next/navigation';
-import styles from '../styles/pagination.module.css'; // Import the CSS module
+import styles from '../styles/pagination.module.css'; 
+
+/**
+ * Pagination component for navigating through pages of products.
+ * 
+ * @param {Object} props - The component props. 
+ * @param {number} props.currentPage - The current page number.
+ * 
+ * @returns {JSX.Element} The rendered pagination component.
+ */
 
 export default function Pagination({ currentPage }) {
   const router = useRouter();
