@@ -100,6 +100,11 @@ export default function Header() {
             <option key={category} value={category}>{category}</option>
           ))}
          </select>
+         <select value={sortOrder} onChange={handleSortChange}>
+          <option value="">Sort by Price</option>
+          <option value="asc">Price: Low to High</option>
+          <option value="desc">Price: High to Low</option>
+         </select>
       </form>
     </header>
   );
