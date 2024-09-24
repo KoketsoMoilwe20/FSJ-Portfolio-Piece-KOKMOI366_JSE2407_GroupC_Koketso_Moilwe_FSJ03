@@ -19,7 +19,8 @@ async function fetchProducts(page = 1, search = '', category = '', sort = '') {
     params.append('category', category);
   }
   if (sort) {
-    params.append('sort', sort);
+    params.append('sortBy', 'price');
+    params.append('order', sort);
   }
 
 
@@ -42,7 +43,7 @@ export default async function ProductsPage({ searchParams }) {
   let products;
 
   try {
-    products = await fetchProducts(page); // Fetch products for the current page
+    products = await fetchProducts(page, searchQuery, category, sortOrder); // Fetch products for the current page
   } catch (error) {
     return (
       <div>
