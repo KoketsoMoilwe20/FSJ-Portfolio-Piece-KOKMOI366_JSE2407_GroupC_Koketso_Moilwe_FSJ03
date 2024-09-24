@@ -52,6 +52,11 @@ export default function Header() {
     setSortOrder(e.target.value);
   };
 
+  const handleRestoreFilters = () => {
+    setSearchQuery('');
+    setSelectedCategory('');
+  }
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
