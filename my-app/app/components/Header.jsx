@@ -44,6 +44,10 @@ export default function Header() {
     router.push(`/?search=${encodeURIComponent(searchQuery)}&category=${encodeURIComponent(selectedCategory)}`);
   };
 
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
