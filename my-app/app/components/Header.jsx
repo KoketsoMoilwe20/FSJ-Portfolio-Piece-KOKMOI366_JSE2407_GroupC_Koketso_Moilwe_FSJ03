@@ -64,7 +64,6 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          {/* <img src="/online-shop.png" alt="Shop Logo" className={styles.logoImage} /> */}
           <span className={styles.logoText}>E-Commerce Store</span>
         </Link>
 
@@ -84,6 +83,17 @@ export default function Header() {
           </Link>
         </nav>
       </div>
+
+      {/* Search and Category Filter */}
+
+      <form onSubmit={handleSearchSubmit}>
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+         />
+      </form>
     </header>
   );
 }
