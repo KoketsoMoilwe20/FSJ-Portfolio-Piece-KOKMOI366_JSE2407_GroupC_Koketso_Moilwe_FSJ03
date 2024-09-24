@@ -4,8 +4,26 @@ import Pagination from "./components/Pagination";
 import styles from './styles/page.module.css'; 
 
 // Fetch products from the API, handle errors if they occur
-async function fetchProducts(page = 1) {
-  const res = await fetch(`https://next-ecommerce-api.vercel.app/products?skip=${(page - 1) * 20}&limit=20`, {
+async function fetchProducts(page = 1, search = '', category = '', sort = '') {
+
+  const params = new URLSearchParams({
+    skip: (page - 1) * 20,
+    limit: 20,
+  });
+
+  // Add search and category parameters if present
+  if (search) {
+    params.append('search', search);
+  }
+  if (category) {
+    params.append('category', category);
+  }
+  if (sort) {
+    params.append('sort', sort);
+  }
+
+
+  const res = await fetch(`https://next-ecommerce-api.vercel.app/products?${params.toString()}`, {
     cache: 'no-store', // Ensure data is always fresh
   });
 
@@ -18,6 +36,9 @@ async function fetchProducts(page = 1) {
 // Main products page component (Server Component)
 export default async function ProductsPage({ searchParams }) {
   const page = parseInt(searchParams.page) || 1; // Get the current page from URL query (searchParams)
+  const searchQuery = searchParams.search || '';
+  const category = searchParams.category || '';
+  const sortOrder = searchParams.sort || '';
   let products;
 
   try {
