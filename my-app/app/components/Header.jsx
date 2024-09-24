@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../styles/Navbar.module.css' 
 
@@ -8,6 +9,9 @@ export default function Header() {
   const [showNavbar, setShowNavbar] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
+  const [categories, setCategories] = useState([]);
+  const router = useRouter();
 
   const toggleNavbar = () => {
     setShowNavbar(!showNavbar);
