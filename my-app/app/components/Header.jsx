@@ -105,6 +105,9 @@ export default function Header() {
           <option value="asc">Price: Low to High</option>
           <option value="desc">Price: High to Low</option>
          </select>
+
+         <button type="submit">Search</button>
+         <button type="button" onClick={handleRestoreFilters}>Restore</button>
       </form>
     </header>
   );
