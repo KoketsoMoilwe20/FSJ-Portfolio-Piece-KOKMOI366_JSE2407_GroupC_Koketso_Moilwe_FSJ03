@@ -93,6 +93,13 @@ export default function Header() {
           value={searchQuery}
           onChange={handleSearchChange}
          />
+
+         <select value={selectedCategory} onChange={handleCategoryChange}>
+          <option value="">All Categories</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>{category}</option>
+          ))}
+         </select>
       </form>
     </header>
   );
