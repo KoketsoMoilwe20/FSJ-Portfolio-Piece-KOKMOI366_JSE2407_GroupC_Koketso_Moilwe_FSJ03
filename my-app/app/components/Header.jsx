@@ -48,6 +48,10 @@ export default function Header() {
     setSelectedCategory(e.target.value);
   };
 
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value);
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
