@@ -39,6 +39,11 @@ export default function Header() {
     setSearchQuery(e.target.value);
   }
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    router.push(`/?search=${encodeURIComponent(searchQuery)}&category=${encodeURIComponent(selectedCategory)}`);
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
