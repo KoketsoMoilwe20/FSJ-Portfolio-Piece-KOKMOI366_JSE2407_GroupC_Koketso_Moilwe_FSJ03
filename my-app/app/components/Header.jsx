@@ -6,6 +6,8 @@ import styles from '../styles/Navbar.module.css'
 
 export default function Header() {
   const [showNavbar, setShowNavbar] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const toggleNavbar = () => {
     setShowNavbar(!showNavbar);
