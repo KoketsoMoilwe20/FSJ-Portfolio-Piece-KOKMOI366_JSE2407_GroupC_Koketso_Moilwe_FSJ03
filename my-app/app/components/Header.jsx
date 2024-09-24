@@ -35,6 +35,10 @@ export default function Header() {
     setShowNavbar(!showNavbar);
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  }
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
