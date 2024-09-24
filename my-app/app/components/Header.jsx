@@ -39,11 +39,6 @@ export default function Header() {
     setSearchQuery(e.target.value);
   }
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    router.push(`/?search=${encodeURIComponent(searchQuery)}&category=${encodeURIComponent(selectedCategory)}`);
-  };
-
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
   };
@@ -59,6 +54,18 @@ export default function Header() {
     setSortOrder('');
     router.push('/');
   };
+
+  // Automatically trigger search whenever filters change
+  useEffect(() => {
+    const queryParams = new URLSearchParams();
+
+    if (searchQuery) queryParams.set('search', searchQuery);
+    if (selectedCategory) queryParams.set('category', selectedCategory);
+    if (sortOrder) queryParams.set('sort', sortOrder);
+
+    // Push the new URL with updated query params
+    router.push(`/?${queryParams.toString()}`);
+  }, [searchQuery, selectedCategory, sortOrder, router]);
 
   return (
     <header className={styles.header}>
@@ -86,7 +93,7 @@ export default function Header() {
 
       {/* Search and Category Filter */}
 
-      <form onSubmit={handleSearchSubmit}>
+      <form>
         <input
           type="text"
           placeholder="Search products..."
@@ -100,13 +107,13 @@ export default function Header() {
             <option key={category} value={category}>{category}</option>
           ))}
          </select>
+
          <select value={sortOrder} onChange={handleSortChange}>
           <option value="">Sort by Price</option>
           <option value="asc">Price: Low to High</option>
           <option value="desc">Price: High to Low</option>
          </select>
 
-         <button type="submit">Search</button>
          <button type="button" onClick={handleRestoreFilters}>Restore</button>
       </form>
     </header>
