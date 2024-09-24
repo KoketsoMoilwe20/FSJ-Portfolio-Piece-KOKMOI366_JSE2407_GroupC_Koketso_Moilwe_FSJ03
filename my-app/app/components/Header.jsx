@@ -55,7 +55,10 @@ export default function Header() {
   const handleRestoreFilters = () => {
     setSearchQuery('');
     setSelectedCategory('');
-  }
+
+    setSortOrder('');
+    router.push('/');
+  };
 
   return (
     <header className={styles.header}>
