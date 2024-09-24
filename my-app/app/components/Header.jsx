@@ -13,6 +13,24 @@ export default function Header() {
   const [categories, setCategories] = useState([]);
   const router = useRouter();
 
+  // Fetch categories from the API
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const res = await fetch('https://next-ecommerce-api.vercel.app/categories');
+        if (!res.ok) {
+          throw new Error('Failed to fetch categories');
+        }
+        const data = await res.json();
+        setCategories(data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+    
+    fetchCategories();
+  }, []);
+
   const toggleNavbar = () => {
     setShowNavbar(!showNavbar);
   };
