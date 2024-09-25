@@ -52,11 +52,12 @@ export default function Pagination({ currentPage, totalItems, itemsPerPage, sear
       </button>
 
     {/* Display the current page number */}
-      <span className={styles.pageNumber}>Page {currentPage}</span>
+      <span className={styles.pageNumber}>Page {currentPage} of {totalPages}</span>
 
     {/* Next button */}
       <button 
         className={styles.button}
+        disabled={currentPage === totalPages} 
         onClick={() => goToPage(currentPage + 1)}
       >
         Next
