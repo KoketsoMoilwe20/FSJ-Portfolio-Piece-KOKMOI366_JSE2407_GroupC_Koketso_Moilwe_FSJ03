@@ -12,8 +12,10 @@ import styles from '../styles/pagination.module.css';
  * @returns {JSX.Element} The rendered pagination component.
  */
 
-export default function Pagination({ currentPage }) {
+export default function Pagination({ currentPage, totalItems, itemsPerPage, search, category, sort }) {
   const router = useRouter(); //Access the Next.js router for navigation.
+  const totalPages = Math.ceil(totalItems / itemsPerPage); // Calculate total pages
+  const searchParams = useSearchParams();
 
 
   /**
