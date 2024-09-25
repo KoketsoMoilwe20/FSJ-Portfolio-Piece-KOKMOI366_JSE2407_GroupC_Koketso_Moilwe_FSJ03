@@ -65,7 +65,14 @@ export default async function ProductsPage({ searchParams }) {
       </div>
 
       {/* Pagination Component */}
-      <Pagination currentPage={page} totalItems={100} itemsPerPage={20} />
+      <Pagination 
+        currentPage={page} 
+        totalItems={125} 
+        itemsPerPage={20}
+        search = {searchQuery}
+        category = {category}
+        sort = {sortOrder} 
+        />
     </div>
   );
 }
