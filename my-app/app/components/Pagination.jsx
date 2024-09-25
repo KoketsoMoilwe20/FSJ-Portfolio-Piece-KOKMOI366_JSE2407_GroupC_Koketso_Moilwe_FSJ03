@@ -26,8 +26,18 @@ export default function Pagination({ currentPage, totalItems, itemsPerPage, sear
 
   // Function to handle page navigation
   const goToPage = (page) => {
-    // Update the URL to reflect the new page.
-    router.push(`/?page=${page}`);
+    // Create URLSearchParams to append current filters and sort order to the URL
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set('page', page); // Update the page parameter
+
+    // Preserve filters and sort in the query params
+    if (search) params.set('search', search);
+    if (category) params.set('category', category);
+    if (sort) params.set('sort', sort);
+
+    // Update the URL with the new page and query parameters
+    router.push(`/?${params.toString()}`);
   };
 
   return (
