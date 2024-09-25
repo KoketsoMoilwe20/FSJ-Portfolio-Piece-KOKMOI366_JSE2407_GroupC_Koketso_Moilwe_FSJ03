@@ -1,16 +1,20 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../styles/Navbar.module.css' 
 
 export default function Header() {
   const [showNavbar, setShowNavbar] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
   const [categories, setCategories] = useState([]);
+
+  const searchParams = useSearchParams();
+
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
+  const [sortOrder, setSortOrder] = useState(searchParams.get('sort') || '');
+  
   const router = useRouter();
 
   // Fetch categories from the API
@@ -30,6 +34,18 @@ export default function Header() {
     
     fetchCategories();
   }, []);
+
+  const updateUrl = () => {
+    const params = new URLSearchParams();
+    if (searchQuery) params.set('search', searchQuery);
+    if (selectedCategory) params.set('category', selectedCategory);
+    if (sortOrder) params.set('sort', sortOrder);
+    router.push(`/?${params.toString()}`);
+  };
+
+  useEffect(() => {
+    updateUrl();
+  }, [searchQuery, selectedCategory, sortOrder]);
 
   const toggleNavbar = () => {
     setShowNavbar(!showNavbar);
@@ -55,17 +71,7 @@ export default function Header() {
     router.push('/');
   };
 
-  // Automatically trigger search whenever filters change
-  useEffect(() => {
-    const queryParams = new URLSearchParams();
-
-    if (searchQuery) queryParams.set('search', searchQuery);
-    if (selectedCategory) queryParams.set('category', selectedCategory);
-    if (sortOrder) queryParams.set('sort', sortOrder);
-
-    // Push the new URL with updated query params
-    router.push(`/?${queryParams.toString()}`);
-  }, [searchQuery, selectedCategory, sortOrder, router]);
+ 
 
   return (
     <header className={styles.header}>
