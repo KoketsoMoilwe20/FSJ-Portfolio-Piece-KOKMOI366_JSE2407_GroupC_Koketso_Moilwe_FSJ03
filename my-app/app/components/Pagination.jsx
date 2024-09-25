@@ -1,6 +1,6 @@
 "use client"; // This is a Client Component because it uses state or client-side behavior
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from '../styles/pagination.module.css'; 
 
 /**
