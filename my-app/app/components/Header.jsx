@@ -35,11 +35,12 @@ export default function Header() {
     fetchCategories();
   }, []);
 
-  const updateUrl = () => {
+  const updateUrl = (page = 1) => {
     const params = new URLSearchParams();
     if (searchQuery) params.set('search', searchQuery);
     if (selectedCategory) params.set('category', selectedCategory);
     if (sortOrder) params.set('sort', sortOrder);
+    params.set('page', page); 
     router.push(`/?${params.toString()}`);
   };
 
