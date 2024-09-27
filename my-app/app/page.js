@@ -11,7 +11,7 @@ async function fetchProducts(page = 1, search = '', category = '', sort = '') {
     limit: 20,
   });
 
-  // Add search and category parameters if present
+
   if (search) {
     params.append('search', search);
   }
@@ -24,7 +24,9 @@ async function fetchProducts(page = 1, search = '', category = '', sort = '') {
   }
 
 
-  const res = await fetch(`https://next-ecommerce-api.vercel.app/products?${params.toString()}`, {
+  const url = `https://next-ecommerce-api.vercel.app/products?${params.toString()}`;
+
+  const res = await fetch(url, {
     cache: 'no-store', // Ensure data is always fresh
   });
 
@@ -53,6 +55,9 @@ export default async function ProductsPage({ searchParams }) {
     );
   }
 
+  // Construct the query string to pass to each ProductCard
+  const queryString = new URLSearchParams(searchParams).toString();
+
   return (
     <div>
       <h1>Products</h1>
@@ -60,7 +65,7 @@ export default async function ProductsPage({ searchParams }) {
       {/* Render product grid */}
       <div className={styles.productGrid}>
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} queryString={queryString}/>
         ))}
       </div>
 

@@ -1,13 +1,17 @@
 "use client"; // This is a Client Component because it uses state or client-side behavior
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import Head from 'next/head';
 import styles from './productDetails.module.css'; 
 
 export default function ProductDetail({ params }) {
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState('');
+  const [sortMethod, setSortMethod] = useState('date'); // Default sort by date
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { id } = params; // Destructuring the id from the params
 
   useEffect(() => {
@@ -35,7 +39,35 @@ export default function ProductDetail({ params }) {
     return <p>Loading...</p>;
   }
 
+  const queryString = searchParams.toString();
+
+  // Function to sort reviews based on the selected method
+  const sortedReviews = () => {
+    if (!product.reviews) return [];
+
+    return [...product.reviews].sort((a, b) => {
+      if (sortMethod === 'date') {
+        return new Date(b.date) - new Date(a.date); // Sort by date descending
+      } else if (sortMethod === 'rating') {
+        return b.rating - a.rating; // Sort by rating descending
+      }
+      return 0;
+    });
+  };
+
   return (
+    <>
+    
+    {/* Adding dynamic meta tags using Head */}
+    <Head>
+    <title>E-Commerce Store</title>
+    <meta name="description" content={product.description} />
+    <meta property="og:title" content={product.title} />
+    <meta property="og:description" content={product.description} />
+    <meta property="og:image" content={product.images[0]} />
+    <meta property="og:type" content="product" />
+    <meta property="og:url" content={`https://your-ecommerce-store.com/products/${id}`} />
+  </Head>
     <div className={styles.container}>
       {/* Main product image */}
       <div className={styles.imageContainer}>
@@ -69,10 +101,6 @@ export default function ProductDetail({ params }) {
         {product.stock > 0 ? `In Stock: ${product.stock}` : 'Out of Stock'}
       </p>
 
-      {/* Display rating */}
-      <p className={styles.rating}>
-        Rating: {product.rating.rate} (Based on {product.rating.count} reviews)
-      </p>
 
       {/* Display tags */}
       <div className={styles.tags}>
@@ -91,11 +119,29 @@ export default function ProductDetail({ params }) {
       {/* Display reviews */}
       <div className={styles.reviews}>
         <h2 className={styles.reviewsTitle}>Reviews:</h2>
-        {product.reviews && product.reviews.length > 0 ? (
+
+          {/* Sort Options */}
+          <div className={styles.sortOptions}>
+          <label>Sort by: </label>
+          <button 
+            className={`${styles.sortButton} ${sortMethod === 'date' ? styles.active : ''}`} 
+            onClick={() => setSortMethod('date')}
+          >
+            Date
+          </button>
+          <button 
+            className={`${styles.sortButton} ${sortMethod === 'rating' ? styles.active : ''}`} 
+            onClick={() => setSortMethod('rating')}
+          >
+            Rating
+          </button>
+        </div>
+
+        {sortedReviews().length > 0 ? (
           <ul>
-            {product.reviews.map((review, index) => (
+            {sortedReviews().map((review, index) => (
               <li key={index} className={styles.review}>
-                <p className={styles.reviewName}>{review.name}</p>
+                <p className={styles.reviewName}><strong>{review.name}</strong></p>
                 <p className={styles.reviewDate}>{new Date(review.date).toLocaleDateString()}</p>
                 <p className={styles.reviewComment}>{review.comment}</p>
                 <p className={styles.reviewRating}>Rating: {review.rating}</p>
@@ -108,12 +154,10 @@ export default function ProductDetail({ params }) {
       </div>
       
       {/* Back to products link */}
-      <button 
-        onClick={() => router.push('/')}
-        className={styles.backButton}
-      >
+      <Link href={`/products?${queryString}`} className={styles.backButton}>
         Back to Products
-      </button>
+      </Link>
     </div>
+    </>
   );
 }

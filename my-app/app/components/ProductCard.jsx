@@ -17,7 +17,7 @@ import styles from '../styles/ProductCard.module.css';
  * @returns {JSX.Element} The rendered product card component.
  */
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, queryString }) {
   return (
     <div className={styles.productCard}>
       <div className={styles.imageContainer}>
@@ -30,7 +30,7 @@ export default function ProductCard({ product }) {
         )}
 
         {/* Link to the product detail page */}
-        <Link href={`/products/${product.id}`} className={styles.productLink}>
+        <Link href={`/products/${product.id}?${queryString}`} className={styles.productLink}>
           <h3 className={styles.productTitle}>{product.title}</h3>
         </Link>
 
