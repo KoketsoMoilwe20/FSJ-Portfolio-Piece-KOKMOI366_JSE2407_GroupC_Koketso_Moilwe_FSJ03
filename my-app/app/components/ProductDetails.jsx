@@ -34,6 +34,19 @@ export default async function ProductDetails({ params }) {
   const product = await getProductDetails(params.id); // Getting product ID from params
 
   return (
+    <div>
+      {/* Dynamic Metadata */}
+      <Head>
+        <title>{product.title || defaultTitle}</title>
+        <meta name="description" content={product.description || defaultDescription} />
+        <meta name="keywords" content={`${product.category}, ${product.tags?.join(', ')}`} />
+        <meta property="og:title" content={product.title || defaultTitle} />
+        <meta property="og:description" content={product.description || defaultDescription} />
+        <meta property="og:image" content={product.images[0]} />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content={`https://your-store.com/products/${product.id}`} />
+      </Head>
+
     <div className={styles.container}>
       {/* Product Title */}
       <h1 className={styles.title}>{product.title}</h1>
@@ -52,6 +65,7 @@ export default async function ProductDetails({ params }) {
         {/* Back to products link */}
         <a href="/products" className={styles.backButton}>← Back to Products</a>
       </div>
+    </div>
     </div>
   );
 }
