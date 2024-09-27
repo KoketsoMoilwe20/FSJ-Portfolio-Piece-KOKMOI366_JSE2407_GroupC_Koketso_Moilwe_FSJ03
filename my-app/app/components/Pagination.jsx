@@ -35,6 +35,7 @@ export default function Pagination({ currentPage, totalItems, itemsPerPage, sear
     if (search) params.set('search', search);
     if (category) params.set('category', category);
     if (sort) params.set('sort', sort);
+    params.set('page', page);
 
     // Update the URL with the new page and query parameters
     router.push(`/?${params.toString()}`);
