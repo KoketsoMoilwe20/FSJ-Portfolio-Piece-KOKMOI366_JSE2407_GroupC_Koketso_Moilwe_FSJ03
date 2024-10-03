@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../styles/Navbar.module.css' 
@@ -35,18 +35,20 @@ export default function Header() {
     fetchCategories();
   }, []);
 
-  const updateUrl = (page = 1) => {
+  
+  const updateUrl = useCallback((page = 1) => {
     const params = new URLSearchParams();
     if (searchQuery) params.set('search', searchQuery);
     if (selectedCategory) params.set('category', selectedCategory);
     if (sortOrder) params.set('sort', sortOrder);
     params.set('page', page); 
     router.push(`/?${params.toString()}`);
-  };
+  }, [searchQuery, selectedCategory, sortOrder, router]);
 
+  // Update URL when searchQuery, selectedCategory, or sortOrder changes
   useEffect(() => {
     updateUrl();
-  }, [searchQuery, selectedCategory, sortOrder]);
+  }, [searchQuery, selectedCategory, sortOrder, updateUrl]);
 
   const toggleNavbar = () => {
     setShowNavbar(!showNavbar);
