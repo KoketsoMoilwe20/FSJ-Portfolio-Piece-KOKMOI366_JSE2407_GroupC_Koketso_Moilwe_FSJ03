@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import ProductCarousel from './ProductCarousel';
+import Image from 'next/image';
 import styles from '../styles/ProductCard.module.css'; 
 
 /**
@@ -26,7 +27,14 @@ export default function ProductCard({ product, queryString }) {
         {product.images && product.images.length > 1 ? (
           <ProductCarousel images={product.images} />
         ) : (
-          <img src={product.images[0]} alt={product.title} className={styles.productImage} />
+          <Image 
+          src={product.images[0]} 
+          alt={product.title} 
+          width={500} // Set the width based on your design
+          height={500} // Set the height based on your design
+          className={styles.productImage}
+          priority={true} // Optional: prioritize above-the-fold images
+        />
         )}
 
         {/* Link to the product detail page */}
