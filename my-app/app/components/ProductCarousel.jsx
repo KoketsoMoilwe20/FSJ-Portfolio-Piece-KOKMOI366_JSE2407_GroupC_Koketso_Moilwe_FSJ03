@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import Image from 'next/image';
 import styles from '../styles/productCarousel.module.css'; 
 
 /**
@@ -44,11 +45,13 @@ export default function ProductCarousel({ images }) {
       </button>
 
       {/* Current image */}
-      <img
-        src={images[currentImageIndex]}
-        alt={`Product Image ${currentImageIndex + 1}`}
-        className={styles.image}
-      />
+      <Image
+          src={images[currentImageIndex]}
+          alt={`Product Image ${currentImageIndex + 1}`}
+          width={500} // Set the width of the image
+          height={500} // Set the height of the image
+          className={styles.image}
+        />
 
       {/* Next arrow button */}
       <button
