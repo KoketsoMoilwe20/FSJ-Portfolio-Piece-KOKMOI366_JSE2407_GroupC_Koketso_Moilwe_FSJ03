@@ -1,5 +1,7 @@
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
+import Head from 'next/head';
 import styles from '../products/[id]/productDetails.module.css';
 
 
@@ -12,14 +14,20 @@ import styles from '../products/[id]/productDetails.module.css';
  */
 
 async function getProductDetails(id) {
-  const res = await fetch(`https://next-ecommerce-api.vercel.app/products/${id}`, { cache: 'no-store' });
-  
-   // Check if the response is okay, otherwise throw an error
-  if (!res.ok) {
-    throw new Error('Failed to fetch product details');
+  try {
+    const res = await fetch(`https://next-ecommerce-api.vercel.app/products/${id}`, { cache: 'no-store' });
+    if (!res.ok) {
+      const errorMessage = await res.text(); // Get error message from the response
+      console.error('Error fetching product details:', errorMessage);
+      throw new Error('Failed to fetch product details');
+    }
+    return res.json();
+  } catch (error) {
+    console.error('Fetch error:', error); // Log any errors that occur
+    throw error;
   }
-  return res.json();
 }
+
 
 /**
  * ProductDetails component for displaying detailed information about a specific product.
@@ -56,11 +64,14 @@ export default async function ProductDetails({ params }) {
     <div className={styles.container}>
       {/* Product Title */}
       <h1 className={styles.title}>{product.title}</h1>
-      <img
-        src={product.image}
-        alt={product.title}
-        className={styles.productImage}
-      />
+      <Image
+          src={product.images[0]}
+          alt={product.title}
+          width={600} // Adjust these as necessary
+          height={600} // Adjust these as necessary
+          className={styles.productImage}
+          priority // Optional: prioritize loading of this image
+        />
 
 <p className={styles.description}>{product.description}</p>
       <p className={styles.price}>Price: ${product.price}</p>
