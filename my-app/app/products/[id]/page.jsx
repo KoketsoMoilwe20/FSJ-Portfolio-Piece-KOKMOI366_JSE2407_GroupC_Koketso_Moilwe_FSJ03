@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import Head from 'next/head';
 import styles from './productDetails.module.css'; 
 
@@ -71,22 +72,29 @@ export default function ProductDetail({ params }) {
     <div className={styles.container}>
       {/* Main product image */}
       <div className={styles.imageContainer}>
-        <img 
-          src={mainImage} 
-          alt={product.title} 
-          className={styles.mainImage} 
-        />
+      <Image 
+        src={mainImage} 
+        alt={product.title} 
+        className={styles.mainImage} 
+        layout="responsive" // Adjust layout as needed (responsive, fixed, fill, etc.)
+        width={500} // Specify width
+        height={300} // Specify height
+      />
+
         
         {/* Thumbnail images */}
         <div className={styles.thumbnailContainer}>
           {product.images.slice(1).map((image, index) => (
             <div key={index}>
-              <img 
-                src={image} 
-                alt={`Thumbnail ${index + 1}`} 
-                className={styles.thumbnail} 
-                onClick={() => setMainImage(image)} // Change main image on thumbnail click
-              />
+              <Image 
+              src={image} 
+              alt={`Thumbnail ${index + 1}`} 
+              className={styles.thumbnail} 
+              layout="responsive" // Adjust layout as needed
+              width={100} // Specify width for thumbnails
+              height={100} // Specify height for thumbnails
+              onClick={() => setMainImage(image)} // Change main image on thumbnail click
+            />
             </div>
           ))}
         </div>
