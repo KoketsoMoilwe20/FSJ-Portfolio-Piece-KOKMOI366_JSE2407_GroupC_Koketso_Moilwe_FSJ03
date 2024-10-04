@@ -1,19 +1,18 @@
-"use client"; // This is a Client Component because it uses state or client-side behavior
+"use client";
 
 import { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import Head from 'next/head';
 import styles from './productDetails.module.css'; 
 
-export default function ProductDetail({ params }) {
+export default function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState('');
   const [sortMethod, setSortMethod] = useState('date'); // Default sort by date
   const params = useParams();
   const searchParams = useSearchParams();
-  const id = params.id; 
+  const id = params.id;
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -57,44 +56,31 @@ export default function ProductDetail({ params }) {
   };
 
   return (
-    <>
-    
-    {/* Adding dynamic meta tags using Head */}
-    <Head>
-    <title>E-Commerce Store</title>
-    <meta name="description" content={product.description} />
-    <meta property="og:title" content={product.title} />
-    <meta property="og:description" content={product.description} />
-    <meta property="og:image" content={product.images[0]} />
-    <meta property="og:type" content="product" />
-    <meta property="og:url" content={`https://your-ecommerce-store.com/products/${id}`} />
-  </Head>
     <div className={styles.container}>
       {/* Main product image */}
       <div className={styles.imageContainer}>
-      <Image 
-        src={mainImage} 
-        alt={product.title} 
-        className={styles.mainImage} 
-        layout="responsive" // Adjust layout as needed (responsive, fixed, fill, etc.)
-        width={500} // Specify width
-        height={300} // Specify height
-      />
-
+        <Image 
+          src={mainImage} 
+          alt={product.title} 
+          className={styles.mainImage} 
+          width={500}
+          height={300}
+          layout="responsive"
+        />
         
         {/* Thumbnail images */}
         <div className={styles.thumbnailContainer}>
           {product.images.slice(1).map((image, index) => (
             <div key={index}>
               <Image 
-              src={image} 
-              alt={`Thumbnail ${index + 1}`} 
-              className={styles.thumbnail} 
-              layout="responsive" // Adjust layout as needed
-              width={100} // Specify width for thumbnails
-              height={100} // Specify height for thumbnails
-              onClick={() => setMainImage(image)} // Change main image on thumbnail click
-            />
+                src={image} 
+                alt={`Thumbnail ${index + 1}`} 
+                className={styles.thumbnail} 
+                width={100}
+                height={100}
+                layout="responsive"
+                onClick={() => setMainImage(image)}
+              />
             </div>
           ))}
         </div>
@@ -108,7 +94,6 @@ export default function ProductDetail({ params }) {
       <p className={styles.stock}>
         {product.stock > 0 ? `In Stock: ${product.stock}` : 'Out of Stock'}
       </p>
-
 
       {/* Display tags */}
       <div className={styles.tags}>
@@ -128,8 +113,8 @@ export default function ProductDetail({ params }) {
       <div className={styles.reviews}>
         <h2 className={styles.reviewsTitle}>Reviews:</h2>
 
-          {/* Sort Options */}
-          <div className={styles.sortOptions}>
+        {/* Sort Options */}
+        <div className={styles.sortOptions}>
           <label>Sort by: </label>
           <button 
             className={`${styles.sortButton} ${sortMethod === 'date' ? styles.active : ''}`} 
@@ -166,6 +151,5 @@ export default function ProductDetail({ params }) {
         Back to Products
       </Link>
     </div>
-    </>
   );
 }
