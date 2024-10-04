@@ -1,28 +1,19 @@
 "use client"; // This is a Client Component because it uses state or client-side behavior
 
-import { useState, useEffect, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Head from 'next/head';
 import styles from './productDetails.module.css'; 
 
-/**
- * Component to handle search parameters.
- */
-function SearchParamsComponent() {
-  const searchParams = useSearchParams();
-  const queryString = searchParams.toString();
-
-  return queryString;
-}
-
 export default function ProductDetail({ params }) {
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState('');
   const [sortMethod, setSortMethod] = useState('date'); // Default sort by date
-  const router = useRouter();
-  const { id } = params; // Destructuring the id from the params
+  const params = useParams();
+  const searchParams = useSearchParams();
+  const id = params.id; 
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -171,11 +162,9 @@ export default function ProductDetail({ params }) {
       </div>
       
       {/* Back to products link */}
-      <Suspense fallback={<div>Loading...</div>}>
-          <Link href={`/products?${<SearchParamsComponent />}`} className={styles.backButton}>
-            Back to Products
-          </Link>
-        </Suspense>
+      <Link href={`/products?${queryString}`} className={styles.backButton}>
+        Back to Products
+      </Link>
     </div>
     </>
   );
