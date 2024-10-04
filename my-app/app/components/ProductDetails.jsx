@@ -1,3 +1,4 @@
+import {Suspense} from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -28,6 +29,16 @@ async function getProductDetails(id) {
   }
 }
 
+/**
+ * Component to handle search parameters
+ */
+function SearchParamsComponent() {
+  const searchParams = useSearchParams();
+  const queryString = searchParams.toString();
+
+  return queryString;
+}
+
 
 /**
  * ProductDetails component for displaying detailed information about a specific product.
@@ -42,10 +53,6 @@ async function getProductDetails(id) {
 export default async function ProductDetails({ params }) {
   // Fetch product details using the product ID from the route parameters
   const product = await getProductDetails(params.id); // Getting product ID from params
-
-  const searchParams = useSearchParams();
-
-  const queryString = searchParams.toString();
 
   return (
     <div>
@@ -80,7 +87,9 @@ export default async function ProductDetails({ params }) {
 
       <div className={styles.actions}>
         {/* Back to products link */}
-        <Link href= {`/products?${queryString}`} className={styles.backButton}>← Back to Products</Link>
+         {/* Suspense for back link */}
+         <Suspense fallback={<div>Loading...</div>}>
+        <Link href= {`/products?${<SearchParamsComponent />}`} className={styles.backButton}>← Back to Products</Link> </Suspense>
       </div>
     </div>
     </div>
