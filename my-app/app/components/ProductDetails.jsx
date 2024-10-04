@@ -1,9 +1,9 @@
 import {Suspense} from 'react';
-import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
 import Image from 'next/image';
 import Head from 'next/head';
 import styles from '../products/[id]/productDetails.module.css';
+import ClientSideNavigation from './ClientSideNavigation';
+
 
 
 /**
@@ -27,16 +27,6 @@ async function getProductDetails(id) {
     console.error('Fetch error:', error); // Log any errors that occur
     throw error;
   }
-}
-
-/**
- * Component to handle search parameters
- */
-function SearchParamsComponent() {
-  const searchParams = useSearchParams();
-  const queryString = searchParams.toString();
-
-  return queryString;
 }
 
 
@@ -80,16 +70,14 @@ export default async function ProductDetails({ params }) {
           priority // Optional: prioritize loading of this image
         />
 
-<p className={styles.description}>{product.description}</p>
+      <p className={styles.description}>{product.description}</p>
       <p className={styles.price}>Price: ${product.price}</p>
       <p className={styles.category}>Category: {product.category}</p>
-      <p className={styles.description}>{product.description}</p>
 
       <div className={styles.actions}>
-        {/* Back to products link */}
-         {/* Suspense for back link */}
-         <Suspense fallback={<div>Loading...</div>}>
-        <Link href= {`/products?${<SearchParamsComponent />}`} className={styles.backButton}>← Back to Products</Link> </Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ClientSideNavigation />
+          </Suspense>
       </div>
     </div>
     </div>
