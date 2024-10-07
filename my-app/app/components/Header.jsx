@@ -44,9 +44,10 @@ export default function Header() {
     router.push(`/?${params.toString()}`);
   };
 
+  // Updates url
   useEffect(() => {
     updateUrl();
-  }, [searchQuery, selectedCategory, sortOrder]);
+  }, [searchQuery, selectedCategory, sortOrder]); 
 
   const toggleNavbar = () => {
     setShowNavbar(!showNavbar);

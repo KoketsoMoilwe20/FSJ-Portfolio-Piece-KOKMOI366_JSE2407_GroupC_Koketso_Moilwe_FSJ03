@@ -60,7 +60,7 @@ export default function ProductDetail({ params }) {
     
     {/* Adding dynamic meta tags using Head */}
     <Head>
-    <title>E-Commerce Store</title>
+    <title>{product.title} | E-Commerce Store</title>
     <meta name="description" content={product.description} />
     <meta property="og:title" content={product.title} />
     <meta property="og:description" content={product.description} />
