@@ -1,5 +1,6 @@
 "use client"; // This is a Client Component because it uses state or client-side behavior
 
+import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from '../styles/pagination.module.css'; 
 
@@ -15,7 +16,10 @@ import styles from '../styles/pagination.module.css';
 export default function Pagination({ currentPage, totalItems, itemsPerPage, search, category, sort }) {
   const router = useRouter(); //Access the Next.js router for navigation.
   const totalPages = Math.ceil(totalItems / itemsPerPage); // Calculate total pages
-  const searchParams = useSearchParams();
+
+  // Component that handles search params and page navigation
+  function SearchParamsComponent() {
+    const searchParams = useSearchParams();
 
 
   /**
@@ -65,4 +69,11 @@ export default function Pagination({ currentPage, totalItems, itemsPerPage, sear
       </button>
     </div>
   );
+}
+
+return (
+  <Suspense fallback={<div>Loading...</div>}>
+    <SearchParamsComponent />
+  </Suspense>
+);
 }

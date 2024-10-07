@@ -1,6 +1,9 @@
-import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import {Suspense} from 'react';
+import Image from 'next/image';
+import Head from 'next/head';
 import styles from '../products/[id]/productDetails.module.css';
+import ClientSideNavigation from './ClientSideNavigation';
+
 
 
 /**
@@ -12,14 +15,20 @@ import styles from '../products/[id]/productDetails.module.css';
  */
 
 async function getProductDetails(id) {
-  const res = await fetch(`https://next-ecommerce-api.vercel.app/products/${id}`, { cache: 'no-store' });
-  
-   // Check if the response is okay, otherwise throw an error
-  if (!res.ok) {
-    throw new Error('Failed to fetch product details');
+  try {
+    const res = await fetch(`https://next-ecommerce-api.vercel.app/products/${id}`, { cache: 'no-store' });
+    if (!res.ok) {
+      const errorMessage = await res.text(); // Get error message from the response
+      console.error('Error fetching product details:', errorMessage);
+      throw new Error('Failed to fetch product details');
+    }
+    return res.json();
+  } catch (error) {
+    console.error('Fetch error:', error); // Log any errors that occur
+    throw error;
   }
-  return res.json();
 }
+
 
 /**
  * ProductDetails component for displaying detailed information about a specific product.
@@ -34,10 +43,6 @@ async function getProductDetails(id) {
 export default async function ProductDetails({ params }) {
   // Fetch product details using the product ID from the route parameters
   const product = await getProductDetails(params.id); // Getting product ID from params
-
-  const searchParams = useSearchParams();
-
-  const queryString = searchParams.toString();
 
   return (
     <div>
@@ -56,20 +61,23 @@ export default async function ProductDetails({ params }) {
     <div className={styles.container}>
       {/* Product Title */}
       <h1 className={styles.title}>{product.title}</h1>
-      <img
-        src={product.image}
-        alt={product.title}
-        className={styles.productImage}
-      />
+      <Image
+          src={product.images[0]}
+          alt={product.title}
+          width={600} // Adjust these as necessary
+          height={600} // Adjust these as necessary
+          className={styles.productImage}
+          priority // Optional: prioritize loading of this image
+        />
 
-<p className={styles.description}>{product.description}</p>
+      <p className={styles.description}>{product.description}</p>
       <p className={styles.price}>Price: ${product.price}</p>
       <p className={styles.category}>Category: {product.category}</p>
-      <p className={styles.description}>{product.description}</p>
 
       <div className={styles.actions}>
-        {/* Back to products link */}
-        <Link href= {`/products?${queryString}`} className={styles.backButton}>← Back to Products</Link>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ClientSideNavigation />
+          </Suspense>
       </div>
     </div>
     </div>
