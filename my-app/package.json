@@ -1,20 +1,16 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
-  "private": true,
+  "name": "next-ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "scripts.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.10"
-  },
-  "devDependencies": {
-    "eslint": "^8",
-    "eslint-config-next": "14.2.10"
+    "dotenv": "^16.4.5",
+    "firebase": "^10.13.0"
   }
 }

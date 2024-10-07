@@ -3,6 +3,7 @@ import ProductCard from "./components/ProductCard";
 import Pagination from "./components/Pagination";
 import styles from './styles/page.module.css'; 
 
+
 // Fetch products from the API, handle errors if they occur
 async function fetchProducts(page = 1, search = '', category = '', sort = '') {
   const params = new URLSearchParams({
