@@ -6,12 +6,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, where, limit, orderBy, startAfter } from "firebase/firestore";
 import { firebaseConfig } from "@/uploadData";
 
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 // Fetch products from the API, handle errors if they occur
 async function fetchProducts(page = 1, search = '', category = '', sort = '') {
-  const params = new URLSearchParams({
-    skip: (page - 1) * 20,
-    limit: 20,
-  });
+  
 
   if (search) {
     params.append('search', search);
