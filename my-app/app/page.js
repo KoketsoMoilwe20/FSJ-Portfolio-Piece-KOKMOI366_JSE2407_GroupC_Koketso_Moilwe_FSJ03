@@ -2,7 +2,8 @@
 import ProductCard from "./components/ProductCard";
 import Pagination from "./components/Pagination";
 import styles from './styles/page.module.css'; 
-
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, getDocs, query, where, limit, orderBy, startAfter } from "firebase/firestore";
 
 // Fetch products from the API, handle errors if they occur
 async function fetchProducts(page = 1, search = '', category = '', sort = '') {
