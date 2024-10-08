@@ -21,7 +21,7 @@ export async function GET() {
 
     if (categoriesSnap.exists()) {
       const categories = categoriesSnap.data().categories;
-      return new Response(JSON.stringify(categories), {
+      return new Response(JSON.stringify({ categories }), {
         status: 200,
         headers: {
           'Content-Type': 'application/json',
