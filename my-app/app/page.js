@@ -68,7 +68,7 @@ export default async function ProductsPage({ searchParams }) {
       fetchProducts(page, searchQuery, category, sortOrder),
       fetchCategories()
     ]);
-
+    
     const { products, totalCount, currentPage, totalPages } = productsData;
 
     // Build query string for preserving filters in pagination
